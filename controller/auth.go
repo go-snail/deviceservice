@@ -11,7 +11,7 @@ func Auth(c *gin.Context) {
 			log.Errorln("Recover failed:",err)
 			return
 		}
-	}
+	}()
 	log.Debugln(c.Params)
 	c.JSON(200, gin.H{
 		"message": "auth",
