@@ -16,7 +16,7 @@ RUN CGO_ENABLED=0 GOOS=linux go build .
 
 FROM alpine AS runner
 
-COPY --from=0 /go/src/deviceservice/cmd/deviceservice .
-#EXPOSE 9107
+COPY --from=0 /go/src/deviceservice .
+## EXPOSE 9107
 
 CMD ./deviceservice -c /etc/golang/deviceservice.toml --switch=false
