@@ -9,7 +9,7 @@ RUN go env -w GOPROXY=https://goproxy.io,direct
 RUN go env -w GO111MODULE=on
 
 ## 切换 work 目录
-WORKDIR /go/src/deviceservice/cmd/deviceservice/
+WORKDIR /go/src/deviceservice/
 
 ## 配置 cgo 编译环境
 RUN CGO_ENABLED=0 GOOS=linux go build .
