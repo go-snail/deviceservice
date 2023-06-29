@@ -19,4 +19,4 @@ FROM alpine AS runner
 COPY --from=0 /go/src/deviceservice .
 ## EXPOSE 9107
 
-CMD ./deviceservice -c /etc/golang/deviceservice.toml --switch=false
+CMD ./deviceservice 
