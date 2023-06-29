@@ -1,4 +1,4 @@
-# deviceservice docker
+# deviceservice docker test
 # golang编译环境的镜像，用于golang环境编译
 FROM golang:alpine AS builder
 
