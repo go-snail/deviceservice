@@ -12,7 +12,7 @@ RUN go env -w GO111MODULE=on
 WORKDIR /go/src/deviceservice/cmd/deviceservice/
 
 ## 配置 cgo 编译环境
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o deviceservice .
+RUN CGO_ENABLED=0 GOOS=linux go build .
 
 FROM alpine AS runner
 
