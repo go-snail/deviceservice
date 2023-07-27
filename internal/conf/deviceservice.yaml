@@ -1,0 +1,21 @@
+gateway:
+  productKey: "productKey"
+  deviceName: "deviceName"
+  deviceSecret: "deviceSecret"
+ffs:
+  addr: "127.0.0.1:80"
+  productKey: "ffs-productKey"
+  deviceName: "deviceName"
+  deviceSecret: "deviceSecret"
+landleaf:
+  addr: "10.0.0.1:80"
+  tsl:
+    property:
+      - "property1"
+      - "property2"
+    event:
+      - "event1"
+      - "event2"
+    service:
+      - "service1"
+      - "service2"
