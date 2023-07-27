@@ -18,7 +18,6 @@ var testcase = struct {
 } {
 	ffs: ffsDeviceService{
 		messageBusClient: messageBus.NewMessageBusClient("nanomq"),
-		ProductKey: conf.GetConf(),
 	},
 }
 
@@ -27,7 +26,7 @@ func TestChangeModel(t *testing.T) {
 		nanomq := messageBus.NewMessageBusByNanoMQ()
 		conf.GetConf()
 		Convey("publist message", func() {
-			topic := fmt.Sprintf(model.Service, conf.C.Ffs.ProductKey, conf.C.Ffs.DeviceName, "ChangeModel")
+			topic := fmt.Sprintf(model.Service, testcase.ffs.ProductKey, testcase.ffs.DeviceName, "ChangeModel")
 			tm := new(model.ThingsModel)
 			tm.Id = xid.New().String()
 			tm.Version = "v1.0"
