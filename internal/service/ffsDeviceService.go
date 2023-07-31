@@ -33,13 +33,13 @@ type ffsDeviceService struct {
 	sendChan         chan model.ThingsModel
 }
 
-func ffsDeviceServerRegister(config conf.Config) {
+func ffsDeviceServerRegister(ffs conf.Ffs) {
 	messagebusClient := messageBus.NewMessageBusClient("nanomq")
 
 	mServer := &ffsDeviceService{Name: ffsDeviceServiceName,
 		messageBusClient: messagebusClient,
-		ProductKey: config.Ffs.ProductKey,
-		DeviceName: config.Ffs.DeviceName,
+		ProductKey: ffs.ProductKey,
+		DeviceName: ffs.DeviceName,
 	}
 
 	sendChan := make(chan model.ThingsModel, 1024)
@@ -53,7 +53,7 @@ func (ffs *ffsDeviceService) Start() {
 	ctx := context.Background()
 	topic := fmt.Sprintf(model.Service, ffs.ProductKey, ffs.DeviceName, "#")
 	ffs.messageBusClient.Receive(ctx, topic, ffs.recvChan)
-
+	//todo 接收ffs服务
 	go func() {
 		//todo 从messagebus中读取消息，发送到nanomq中
 		for {
@@ -68,6 +68,17 @@ func (ffs *ffsDeviceService) Start() {
 				timer.Stop()
 			}
 
+		}
+	}()
+
+	//todo 定时主动上报ffs属性
+	go func() {
+		timer := time.NewTimer(10*time.Second)
+		for  {
+			select {
+			case <-timer.C:
+				//todo 定时任务
+			}
 		}
 	}()
 }

@@ -58,8 +58,7 @@ func (rmb *redisMessageBus) Receive(ctx context.Context,topic string,reChan chan
 	rmb.rc.XDel(ctx, setKey, id)
 	return
 }
-func (rmb *redisMessageBus) Send(ctx context.Context,topic string, sendChan chan model.ThingsModel) {
-	var tm model.ThingsModel
+func (rmb *redisMessageBus) Send(ctx context.Context,topic string, tm model.ThingsModel) {
 	postKey := fmt.Sprintf(model.Post, rmb.ProductKey,rmb.DeviceName)
 	err := rmb.rc.XAdd(ctx, &redis.XAddArgs{
 		Stream:     postKey, // 设置流stream的 key，消息队列名

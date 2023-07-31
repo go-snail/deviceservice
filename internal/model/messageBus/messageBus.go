@@ -8,12 +8,13 @@ import (
 type MessageBusClient interface {
 	 Receive(ctx context.Context,topic string,recvChan chan model.ThingsModel)
 	// PostReply(ctx context.Context,tm *model.ThingsModel)
-	 Send(ctx context.Context,topic string,sendChan chan model.ThingsModel)
+	 Send(ctx context.Context,topic string,tm model.ThingsModel)
 	 //SetReply(ctx context.Context,tm *model.ThingsModel)
 	 //Event(ctx context.Context,tm *model.ThingsModel)
 	 //EventReply(ctx context.Context,tm *model.ThingsModel)
 	// Service(ctx context.Context,tm *model.ThingsModel)
 	 //ServiceReply(ctx context.Context,tm *model.ThingsModel)
+
 }
 
 type Message struct {

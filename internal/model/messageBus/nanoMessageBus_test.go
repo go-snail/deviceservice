@@ -1,33 +1,33 @@
 package messageBus
 
 import (
-	"deviceservice/internal/conf"
+	"context"
 	"deviceservice/internal/model"
-	"encoding/json"
 	"fmt"
 	"github.com/rs/xid"
 	. "github.com/smartystreets/goconvey/convey"
-	"golang.org/x/net/context"
 	"testing"
 	"time"
 )
-
 var testcase = struct {
 	nanombt MessageBusClient
 	productkey string
 	devicename string
 	service string
+	sendChan chan model.ThingsModel
+	recvChan chan model.ThingsModel
 } {
 	nanombt : NewMessageBusClient("nanomq"),
 	productkey: "product",
 	devicename: "devicename",
-	service: "service",
+	service: "ChangeModel",
+
+	recvChan: make(chan model.ThingsModel,1024),
 }
-
-func TestSendThingModel(t *testing.T) {
-	Convey("TestSendThingModel", t, func() {
-
+func TestNanoMQSendMessage(t *testing.T)  {
+	Convey("TestNanoMQSendMessage", t, func() {
 		Convey("publist message", func() {
+
 			topic := fmt.Sprintf(model.Service, testcase.productkey, testcase.devicename, testcase.service)
 			tm := new(model.ThingsModel)
 			tm.Id = xid.New().String()
@@ -46,25 +46,27 @@ func TestSendThingModel(t *testing.T) {
 			param["Power"] = *iden1
 			param["WF"] = *iden2
 			tm.Payload = param
-			tmjson, err := json.Marshal(tm)
-			So(err, ShouldBeNil)
-			sendChan := make(chan model.ThingsModel, 1024)
+
+			//sendChan := make(chan model.ThingsModel, 1024)
 			for {
 				select {
 				case <-time.After(10 * time.Second):
-					t.Log("publish message:", tmjson)
-					testcase.nanombt.Send(context.Background(), topic, sendChan)
+					//testcase.nanombt.sendChan <- *tm
+					t.Log("topic:",topic)
+					testcase.nanombt.Send(context.Background(), topic,*tm)
 				}
 			}
 		})
 	})
 }
 
-func TestRecvThingModel(t *testing.T) {
-	Convey("TestSendThingModel", t, func() {
+
+func TestNanoMQRecvMessage(t *testing.T) {
+	Convey("TestRecvThingModel", t, func() {
 		ctx := context.Background()
-		topic := fmt.Sprintf(model.Service, conf.C.Ffs.ProductKey, conf.C.Ffs.DeviceName, "ChangeModel")
+		topic := fmt.Sprintf(model.Service, testcase.productkey, testcase.devicename, testcase.service)
 		recvChan := make(chan model.ThingsModel, 1024)
+		t.Log("recv topic:", topic)
 		testcase.nanombt.Receive(ctx, topic, recvChan)
 
 		for {
