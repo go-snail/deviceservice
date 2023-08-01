@@ -19,7 +19,7 @@ var (
 
 func RegisterService(config conf.Config)  {
 	ffsDeviceServerRegister(config.Ffs)
-	GatewayDeviceServerRegister(config.Gateway)
+	//GatewayDeviceServerRegister(config.Gateway)
 }
 
 

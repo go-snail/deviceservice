@@ -40,12 +40,9 @@ func ffsDeviceServerRegister(ffs conf.Ffs) {
 		messageBusClient: messagebusClient,
 		ProductKey: ffs.ProductKey,
 		DeviceName: ffs.DeviceName,
+		sendChan : make(chan model.ThingsModel, 1024),
+		recvChan : make(chan model.ThingsModel, 1024),
 	}
-
-	sendChan := make(chan model.ThingsModel, 1024)
-	recvChan := make(chan model.ThingsModel, 1024)
-	mServer.recvChan = recvChan
-	mServer.sendChan = sendChan
 	ss = append(ss, mServer)
 }
 
@@ -64,7 +61,7 @@ func (ffs *ffsDeviceService) Start() {
 				dispatcher(tm)
 				timer.Stop()
 			case <-timer.C:
-				log.Info("messagebus receive timeout after 5 mins")
+				log.Info("ffs messagebus receive timeout after 30 seconds")
 				timer.Stop()
 			}
 

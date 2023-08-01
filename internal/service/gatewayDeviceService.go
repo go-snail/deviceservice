@@ -37,16 +37,13 @@ type GatewayDeviceService struct {
 func GatewayDeviceServerRegister(gateway conf.Gateway) {
 	messagebusClient := messageBus.NewMessageBusClient("nanomq")
 
-	mServer := &ffsDeviceService{Name: ffsDeviceServiceName,
+	mServer := &GatewayDeviceService{Name: GatewayDeviceServiceName,
 		messageBusClient: messagebusClient,
 		ProductKey: gateway.ProductKey,
 		DeviceName: gateway.DeviceName,
+		recvChan: make(chan model.ThingsModel, 1024),
+		sendChan: make(chan model.ThingsModel, 1024),
 	}
-
-	sendChan := make(chan model.ThingsModel, 1024)
-	recvChan := make(chan model.ThingsModel, 1024)
-	mServer.recvChan = recvChan
-	mServer.sendChan = sendChan
 	ss = append(ss, mServer)
 }
 

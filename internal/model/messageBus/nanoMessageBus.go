@@ -34,7 +34,6 @@ func NewMessageBusByNanoMQ() *nanoMQMessageBus {
 从设备直连的nanomq
 */
 func (nanomb *nanoMQMessageBus) Receive(ctx context.Context, topic string, recvChan chan model.ThingsModel) {
-	log.Info(topic)
 	if token := nanomb.Subscribe(topic, 1, func(client mqtt.Client, message mqtt.Message) {
 		log.Infof("TOPIC: %s\n", message.Topic())
 		log.Infof("MSG: %s\n", message.Payload())
