@@ -31,7 +31,7 @@ type Gateway struct {
 
 type Config struct {
 	Gateway  `mapstructure:"Gateway"`
-	Ffs      `mapstructure:"ffs"`
+	Ffs      `mapstructure:"gateway"`
 	Landleaf `mapstructure:"landleaf"`
 	//MySQL struct {
 	//	Database    string   `mapstructure:"database"`

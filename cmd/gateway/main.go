@@ -16,7 +16,7 @@ limitations under the License.
 package main
 
 import (
-	"deviceservice/cmd/ffs/cmd"
+	"deviceservice/cmd/gateway/cmd"
 	log "github.com/sirupsen/logrus"
 )
 

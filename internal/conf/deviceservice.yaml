@@ -4,7 +4,7 @@ gateway:
   deviceSecret: "deviceSecret"
 ffs:
   addr: "127.0.0.1:80"
-  productKey: "ffs-productKey"
+  productKey: "gateway-productKey"
   deviceName: "deviceName"
   deviceSecret: "deviceSecret"
 landleaf:
